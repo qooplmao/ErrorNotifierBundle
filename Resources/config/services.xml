@@ -68,10 +68,10 @@
         </service>
 
         <service id="elao.error_notifier.notifier.default_slack" class="%elao.error_notifier.notifier.default_slack.class%">
+            <argument type="service" id="elao.error_notifier.client.slack" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="templating" />
             <argument />    <!-- channel -->
-            <argument type="service" id="cl_slack.api_client" on-invalid="null" />
             <tag name="elao.error_notifier" alias="default_slack" />
         </service>
 

@@ -34,16 +34,16 @@ class SlackNotifier implements NotifierInterface
     protected $apiClient;
 
     /**
+     * @param ApiClient $apiClient
      * @param TokenStorageInterface $tokenStorage
      * @param EngineInterface $templating
      * @param $channel
-     * @param ApiClient $apiClient
      */
     public function __construct(
+        ApiClient $apiClient,
         TokenStorageInterface $tokenStorage,
         EngineInterface $templating,
-        $channel,
-        ApiClient $apiClient = null
+        $channel
     ) {
         $this->tokenStorage     = $tokenStorage;
         $this->apiClient        = $apiClient;
@@ -66,8 +66,6 @@ class SlackNotifier implements NotifierInterface
         Command $command = null,
         InputInterface $commandInput = null
     ) {
-        $this->assertClSlackInstalled();
-
         $text = $this->templating->render('ElaoErrorNotifierBundle:Slack:text.txt.twig', array(
             'exception'       => $exception,
             'request'         => $request,
@@ -83,22 +81,7 @@ class SlackNotifier implements NotifierInterface
         $payload->setUsername(sprintf('%s (bot)', $this->getUsername($exception)));
         $payload->setIconEmoji('skull');
 
-        $response = $this->apiClient->send($payload);
-    }
-
-    /**
-     * Asserts CL Slack Bundle is installed and enabled to use this notifier
-     *
-     * @return null
-     * @throws \Exception
-     */
-    private function assertClSlackInstalled()
-    {
-        if (null === $this->apiClient) {
-            throw new \Exception(
-                'Please make sure that you have installed and enabled the CLSlackBundle (cleentfaar/slack-bundle)'
-            );
-        }
+        $this->apiClient->send($payload);
     }
 
     /**
