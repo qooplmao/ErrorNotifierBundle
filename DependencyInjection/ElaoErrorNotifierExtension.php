@@ -178,7 +178,7 @@ class ElaoErrorNotifierExtension extends Extension
         $container
             ->getDefinition('elao.error_notifier.client.slack')
             ->setClass('CL\Slack\Transport\ApiClient')
-            ->replaceArgument(0, $config['token'])
+            ->replaceArgument(0, $config['api_token'])
         ;
     }
 }
