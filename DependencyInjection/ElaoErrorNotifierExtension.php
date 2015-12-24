@@ -5,7 +5,6 @@ namespace Elao\ErrorNotifierBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Parameter;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -15,7 +14,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 /**
  * ElaoErrorNotifier Extension
  */
-class ElaoErrorNotifierExtension extends Extension implements PrependExtensionInterface
+class ElaoErrorNotifierExtension extends Extension
 {
     /**
      * load configuration
