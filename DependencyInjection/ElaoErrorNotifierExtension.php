@@ -169,22 +169,17 @@ class ElaoErrorNotifierExtension extends Extension implements PrependExtensionIn
             ->getDefinition('elao.error_notifier.notifier.default_slack')
             ->replaceArgument(2, $config['channel'])
         ;
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function prepend(ContainerBuilder $container)
-    {
-        $bundles = $container->getParameter('kernel.bundles');
-
-        $configs = $container->getExtensionConfig($this->getAlias());
-        $config = $this->processConfiguration(new Configuration(), $configs);
-
-        $clSlackApiToken = $config['notifiers']['slack']['api_token'];
-
-        if (isset($bundles['CLSlackBundle']) && $clSlackApiToken) {
-            $container->prependExtensionConfig('cl_slack', array('api_token' => $clSlackApiToken));
+        if (!class_exists('CL\Slack\Transport\ApiClient')) {
+            throw new \Exception(
+                'Default Slack notifier requires the "CL\Slack\Transport\ApiClient" class, part of the cleentfaar/slack package'
+            );
         }
+
+        $container
+            ->getDefinition('elao.error_notifier.client.slack')
+            ->setClass('CL\Slack\Transport\ApiClient')
+            ->replaceArgument(0, $config['token'])
+        ;
     }
 }

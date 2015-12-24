@@ -74,6 +74,10 @@
             <argument type="service" id="cl_slack.api_client" on-invalid="null" />
             <tag name="elao.error_notifier" alias="default_slack" />
         </service>
+
+        <service id="elao.error_notifier.client.slack" class="CL\Slack\Transport\ApiClient">
+            <argument />   <!-- token -->
+        </service>
     </services>
 
 
