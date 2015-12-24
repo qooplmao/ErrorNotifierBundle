@@ -166,7 +166,7 @@ class ElaoErrorNotifierExtension extends Extension
 
         $container
             ->getDefinition('elao.error_notifier.notifier.default_slack')
-            ->replaceArgument(2, $config['channel'])
+            ->replaceArgument(3, $config['channel'])
         ;
 
         if (!class_exists('CL\Slack\Transport\ApiClient')) {
